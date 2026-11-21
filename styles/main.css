@@ -1,6 +1,7 @@
 /* custom property */
 :root {
-	--accent-color: #800000;  /* could also be coded #800 */
+	--accent-color: #800000;
+	/* could also be coded #800 */
 	--gradient-color: #f6bb73;
 
 	--light_menu: white;
@@ -18,29 +19,40 @@
 /* default styles */
 body {
 	font-family: Arial, Helvetica, sans-serif;
-    font-size: calc(15px + .2vw);
+	font-size: calc(15px + .2vw);
 	width: min(80%, 1024px);
 	line-height: 1.5;
 	margin: auto;
 	border: 2px solid var(--accent-color);
 }
-h1, h2, h3, p, ul {
+
+h1,
+h2,
+h3,
+p,
+ul {
 	padding: .25em 0;
 }
-a:hover, a:focus{
+
+a:hover,
+a:focus {
 	font-style: italic;
 	color: var(--accent-color);
 }
+
 h1 {
 	font-size: 150%;
 }
+
 h2 {
 	font-size: 130%;
 	color: var(--accent-color);
 }
+
 h3 {
 	font-size: 105%;
 }
+
 ul {
 	margin-left: 2em;
 }
@@ -49,33 +61,40 @@ ul {
 header {
 	line-height: 1.2;
 	border-bottom: 2px solid var(--accent-color);
-	background-image: linear-gradient(
-	    30deg, var(--gradient-color) 0%, white 30%, white 65%, var(--gradient-color) 100%);
+	background-image: linear-gradient(30deg, var(--gradient-color) 0%, white 30%, white 65%, var(--gradient-color) 100%);
+
 	& h2 {
 		font-size: 175%;
 		padding: .5em 0 0 0;
 	}
+
 	& h3 {
 		font-size: 130%;
 		font-style: italic;
 		padding-bottom: 1em;
 	}
+
 	& img {
-		width: clamp(40px, 15%, 80px);
-		float: left;
-		margin: .75em 1em;
+		display: none;
 	}
+
+	text-align: center;
+
 }
 
 /* the styles for the main content */
 main {
+	flex-direction: column-reverse;
 	display: flex;
 	padding: 0 1em 1em;
+
 	& blockquote {
 		font-style: italic;
 		padding-left: 1em;
 	}
-	& h3 + img { /* speaker images */
+
+	& h3+img {
+		/* speaker images */
 		width: clamp(40px, 50%, 75px);
 		border: 4px double var(--accent-color);
 		border-radius: 10px;
@@ -84,24 +103,26 @@ main {
 
 /* the styles for the section */
 section {
-	flex-basis: 75%;
 	padding-left: .5em;
+
 	& img {
 		width: clamp(100px, 50%, 250px);
 		float: right;
 		margin: 0 1em .25em;
 	}
+
+	border-bottom: 2px solid var(--accent-color);
 }
 
 /* the styles for the aside */
 aside {
-	flex-basis: 25%;
 	padding-right: .5em;
 }
 
 /* the styles for the footer */
 footer {
 	background-color: var(--accent-color);
+
 	& p {
 		text-align: center;
 		color: white;
@@ -115,47 +136,93 @@ footer {
 	border-bottom: 2px solid var(--accent-color);
 	padding: .5em 0 1em;
 }
+
 .speaker {
 	& h1 {
 		color: var(--accent-color);
 	}
+
 	& h2 {
 		color: black;
 	}
+
 	& p {
-		padding: .5em 0; 
-	}	
+		padding: .5em 0;
+	}
 }
+
 .large {
 	font-size: 125%;
 }
 
 /* styles for the menu */
 .menu {
-	display: flex;
-	flex-wrap: wrap;
-	& li { 
-		flex-basis: 20%; 
+	position: absolute;
+	left: 0;
+	background-color: var(--accent-color);
+	width: 40%;
+	display: none;
+
+	& li {
+		flex-basis: 20%;
 		text-align: center;
 	}
 }
 
+.menu-btn {
+	/* format menu button */
+	display: block;
+	/* show menu button */
+	padding: 0.25em 1em;
+	color: var(--light_menu);
+	font-size: 24px;
+}
+
+.menu-btn::after {
+	content: "\2630";
+}
+
+#checkbox-toggle {
+	display: none;
+}
+
+/* checkbox is always hidden */
+/* when checkbox is checked, display the menu and the close symbol */
+#checkbox-toggle:checked~.menu {
+	display: block;
+}
+
+#checkbox-toggle:checked~.menu-btn::after {
+	content: "\2716";
+	/* close (X) symbol */
+}
+
+
 .navbar {
+	position: relative;
+
 	clear: left;
 	background-color: var(--accent-color);
+
 	& a {
 		display: block;
 		padding: 1em;
 		text-decoration: none;
-		margin: 0 1px 2px;
+		margin: 0 2px 2px 0;
 	}
-	& a:link, a:visited { 
+
+	& a:link,
+	a:visited {
 		color: var(--light_menu);
 	}
-	& a:hover, a:focus, a.current {
+
+	& a:hover,
+	a:focus,
+	a.current {
 		background-color: var(--mid_menu);
 		color: var(--dark_menu);
 	}
+
 	& ul {
 		list-style-type: none;
 		padding: 0;
@@ -163,24 +230,126 @@ footer {
 	}
 }
 
-.submenu {
+.menu li:has(.submenu) {
 	position: relative;
-	& small { margin-left: .25em; }
+
+	& small::after {
+		content: "\25b6";
+		/* right triangle */
+	}
+
+	& small {
+		margin-left: .25em;
+		/* add space */
+	}
+
+	&:hover>.submenu {
+		display: block;
+	}
 }
 
-.dropdown {
+.submenu {
 	position: absolute;
-	left: 0;
-	right: 0;
-	background-color: var(--accent-color);
+	top: 0;
+	left: 100%;
+	background-color: var(--dark_menu);
 	color: var(--light_menu);
+	width: 100%;
 	display: none;
-	& > li a { margin: 0 2px 2px; }
+
+	& li a {
+		margin: 2px;
+	}
 }
 
-.submenu:hover > .dropdown {
-	display: block;
+
+@media only screen and (width >=920px) {
+	main {
+		flex-direction: row;
+
+		& blockquote {
+			font-style: italic;
+			padding-left: 1em;
+		}
+
+		& h3+img {
+			/* speaker images */
+			width: clamp(40px, 50%, 75px);
+			border: 4px double var(--accent-color);
+			border-radius: 10px;
+		}
+	}
+
+	section {
+		flex-basis: 75%;
+		border-bottom: none;
+	}
+
+	aside {
+		flex-basis: 25%;
+	}
 }
 
-.menu > li:first-child a { margin-left: 0; }
-.menu > li:last-child a { margin-right: 0; }
+@media only screen and (width >=784px) {
+	.menu {
+		display: flex;
+		position: relative;
+		width: 100%;
+
+		& li {
+			flex-basis: 20%;
+			text-align: center;
+		}
+	}
+
+	.menu-btn {
+		display: none;
+	}
+
+	/* make sure menu displays horizontally 
+       if menu checkbox is checked */
+	#checkbox-toggle:checked~.menu {
+		display: flex;
+	}
+
+	.menu li:has(.submenu) {
+		& small::after {
+			content: "\25bc";
+			/* down triangle */
+		}
+	}
+
+	.submenu {
+		top: auto;
+		left: 0;
+		width: 200%;
+	}
+
+	.menu>li:first-child a {
+		margin-left: 0;
+	}
+
+	.menu>li:last-child a {
+		margin-right: 0;
+	}
+
+	.navbar {
+		& a {
+			margin: 0 1px 2px;
+		}
+	}
+}
+
+@media only screen and (width >=655px) {
+	header {
+		& img {
+			width: clamp(40px, 15%, 80px);
+			float: left;
+			margin: .75em 1em;
+			display: block;
+		}
+
+		text-align: left;
+
+	}
+}
